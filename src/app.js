@@ -42,23 +42,23 @@ app.get('/transfer', function(req, res) {
 })
 
 app.post('/transfer', function(req, res) {
-  console.log(req.body);
+  // console.log(req.body);
   var xferAmt = parseInt(req.body.amount);
   var fromAccount = accounts[req.body.from];
-  console.log(fromAccount);
+  // console.log(fromAccount);
   var oldBalance = fromAccount.balance;
   var newBalance = oldBalance - xferAmt;
-  console.log('new balance From Acct: ' + newBalance);
+  // console.log('new balance From Acct: ' + newBalance);
   fromAccount.balance = newBalance;
-  console.log('new balance in accounts, From account : ' + accounts[req.body.from].balance);
+  // console.log('new balance in accounts, From account : ' + accounts[req.body.from].balance);
 
   var toAccount = accounts[req.body.to];
-  console.log('To Account : ' + toAccount);
+  // console.log('To Account : ' + toAccount);
   var oldToBalance = toAccount.balance;
   var newToBalance = oldToBalance + xferAmt;
-  console.log('new balance To Acct: ' + newToBalance);
+  // console.log('new balance To Acct: ' + newToBalance);
   toAccount.balance = newToBalance;
-  console.log('new balance in accounts, To account : ' + accounts[req.body.to].balance);
+  // console.log('new balance in accounts, To account : ' + accounts[req.body.to].balance);
 
   var accountsJSON = JSON.stringify(accounts);
   fs.writeFileSync(path.join(__dirname, '/json/accounts.json'), accountsJSON,
