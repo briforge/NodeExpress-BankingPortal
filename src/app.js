@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
+const { accounts, users, writeJSON } = require('./data.js');
 
 const app = express();
 
@@ -9,13 +10,15 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public/')))
 app.use(express.urlencoded({ extended: true }))
 
-const accountData = fs.readFileSync(path.join(__dirname, '/json/accounts.json'),
-                                            {encoding:'utf8'});
-const accounts = JSON.parse(accountData);
+// const accountData = fs.readFileSync(path.join(__dirname, '/json/accounts.json'),
+//                                             {encoding:'utf8'});
+// const accounts = JSON.parse(accountData);
+//
+// const userData = fs.readFileSync(path.join(__dirname, '/json/users.json'),
+//                                             {encoding:'utf8'});
+// const users = JSON.parse(userData);
 
-const userData = fs.readFileSync(path.join(__dirname, '/json/users.json'),
-                                            {encoding:'utf8'});
-const users = JSON.parse(userData);
+
 
 app.get('/', function(req, res) {
   res.render('index', { title: 'Account Summary', accounts: accounts});
@@ -60,9 +63,10 @@ app.post('/transfer', function(req, res) {
   toAccount.balance = newToBalance;
   // console.log('new balance in accounts, To account : ' + accounts[req.body.to].balance);
 
-  var accountsJSON = JSON.stringify(accounts);
-  fs.writeFileSync(path.join(__dirname, '/json/accounts.json'), accountsJSON,
-                              'utf8' );
+  // var accountsJSON = JSON.stringify(accounts);
+  // fs.writeFileSync(path.join(__dirname, '/json/accounts.json'), accountsJSON,
+  //                             'utf8' );
+  writeJSON(accounts);
 
   res.render('transfer', { message: 'Transfer Completed'});
 })
@@ -75,9 +79,10 @@ app.post('/payment', function(req, res) {
   var amt = parseInt(req.body.amount);
   accounts.credit.balance -= amt;
   accounts.credit.available += amt;
-  var accountsJSON = JSON.stringify(accounts);
-  fs.writeFileSync(path.join(__dirname, '/json/accounts.json'), accountsJSON,
-                              'utf8' );
+  // var accountsJSON = JSON.stringify(accounts);
+  // fs.writeFileSync(path.join(__dirname, '/json/accounts.json'), accountsJSON,
+  //                             'utf8' );
+  writeJSON(accounts);
 
   res.render('payment', { message: 'Payment Successful', account: accounts.credit});
 })
