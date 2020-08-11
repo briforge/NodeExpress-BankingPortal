@@ -66,7 +66,7 @@ app.post('/transfer', function(req, res) {
   // var accountsJSON = JSON.stringify(accounts);
   // fs.writeFileSync(path.join(__dirname, '/json/accounts.json'), accountsJSON,
   //                             'utf8' );
-  writeJSON(accounts);
+  writeJSON();
 
   res.render('transfer', { message: 'Transfer Completed'});
 })
@@ -82,7 +82,7 @@ app.post('/payment', function(req, res) {
   // var accountsJSON = JSON.stringify(accounts);
   // fs.writeFileSync(path.join(__dirname, '/json/accounts.json'), accountsJSON,
   //                             'utf8' );
-  writeJSON(accounts);
+  writeJSON();
 
   res.render('payment', { message: 'Payment Successful', account: accounts.credit});
 })
